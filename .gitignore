@@ -170,9 +170,12 @@ push_to_github.sh
 generate_linkedin_post.sh
 show_deployment_summary.sh
 
-# Internal docs directory
-docs/
+# Internal docs directory (but allow docs/diagrams/)
+docs/*
+!docs/diagrams/
 
 # Cleanup analysis
 CLEANUP_ANALYSIS.txt
+CLEANUP_SUCCESS.txt
+AGGRESSIVE_CLEANUP.sh
 

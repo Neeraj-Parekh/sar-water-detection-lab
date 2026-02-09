@@ -1,0 +1,180 @@
+digraph SAR_Architecture {
+    // Graph settings
+    rankdir=TB;
+    bgcolor="#ffffff";
+    fontname="Arial";
+    fontsize=12;
+    node [fontname="Arial", fontsize=11, style="filled", shape="box"];
+    edge [fontname="Arial", fontsize=10];
+    
+    // Define color scheme
+    color_ui="#E3F2FD";
+    color_core="#FFF3E0";
+    color_data="#F1F8E9";
+    color_algo="#FCE4EC";
+    
+    // Title
+    labelloc="t";
+    label=<<b><font point-size="16">SAR Water Detection Lab - System Architecture</font></b>>;
+    
+    // ============================================
+    // LAYER 1: Streamlit UI
+    // ============================================
+    subgraph cluster_ui {
+        label=<<b>Streamlit UI Layer</b>>;
+        style=filled;
+        color="#2196F3";
+        fillcolor="#E3F2FD";
+        
+        subgraph cluster_ui_components {
+            label="";
+            style=invis;
+            
+            sidebar [label=<<b>Sidebar</b><br/>• Chip Selection<br/>• Presets Loader<br/>• QA Controls<br/>• Settings>, fillcolor="#90CAF9", shape="box"];
+            
+            canvas [label=<<b>Main Canvas</b><br/>• 15 Filter Windows<br/>• Live Preview<br/>• Visual Feedback<br/>• Overlay Modes>, fillcolor="#90CAF9", shape="box"];
+            
+            controls [label=<<b>Controls Panel</b><br/>• Fusion (OR/AND/Vote)<br/>• Export Pipeline<br/>• QA Validation<br/>• Config Save>, fillcolor="#90CAF9", shape="box"];
+        }
+        
+        ui_layer [label="app.py (Main Application)", fillcolor="#42A5F5", fontcolor="white", shape="box", style="filled,rounded"];
+    }
+    
+    // ============================================
+    // LAYER 2: Core Processing Engine
+    // ============================================
+    subgraph cluster_core {
+        label=<<b>Core Processing Engine</b>>;
+        style=filled;
+        color="#FF9800";
+        fillcolor="#FFF3E0";
+        
+        filter_engine [label=<<b>filter_engine_complete.py</b><br/><i>47+ Water Detection Algorithms</i>>, fillcolor="#FFB74D", shape="box", style="filled,rounded"];
+        
+        subgraph cluster_algorithms {
+            label="Algorithm Categories";
+            style=filled;
+            fillcolor="#FCE4EC";
+            
+            radiometric [label=<<b>Radiometric</b><br/>• Otsu<br/>• Kittler-Illingworth<br/>• CFAR<br/>• Triangle>, fillcolor="#F8BBD0", shape="box"];
+            
+            texture [label=<<b>Texture</b><br/>• GLCM Entropy<br/>• GLCM Variance<br/>• Touzi Edge<br/>• Haralick>, fillcolor="#F8BBD0", shape="box"];
+            
+            morphological [label=<<b>Morphological</b><br/>• Active Contours<br/>• Top-Hat<br/>• Area Filters<br/>• Watershed>, fillcolor="#F8BBD0", shape="box"];
+            
+            geomorphic [label=<<b>Geomorphic</b><br/>• HAND<br/>• TWI<br/>• Slope<br/>• Curvature>, fillcolor="#F8BBD0", shape="box"];
+            
+            ml_dl [label=<<b>ML/DL</b><br/>• Attention U-Net<br/>• LightGBM<br/>• Random Forest<br/>• SVM>, fillcolor="#F8BBD0", shape="box"];
+            
+            custom [label=<<b>Custom</b><br/>• Equation Engine<br/>• Python Expressions<br/>• User-Defined<br/>• Novel Methods>, fillcolor="#F8BBD0", shape="box"];
+        }
+        
+        subgraph cluster_modules {
+            label="Support Modules";
+            style=filled;
+            fillcolor="#FFF9C4";
+            
+            analysis [label="analysis_module.py\nStatistics & Metrics", fillcolor="#FFF59D", shape="box"];
+            qa [label="qa_module.py\nQuality Assurance", fillcolor="#FFF59D", shape="box"];
+            presets [label="presets.py\nFilter Presets", fillcolor="#FFF59D", shape="box"];
+        }
+    }
+    
+    // ============================================
+    // LAYER 3: Data Layer
+    // ============================================
+    subgraph cluster_data {
+        label=<<b>Data Layer</b>>;
+        style=filled;
+        color="#8BC34A";
+        fillcolor="#F1F8E9";
+        
+        config [label=<<b>config.py</b><br/><i>Configuration Management</i>>, fillcolor="#AED581", shape="box", style="filled,rounded"];
+        
+        subgraph cluster_data_sources {
+            label="Data Sources";
+            style=filled;
+            fillcolor="#DCEDC8";
+            
+            features [label=<<b>Features</b><br/>7-band SAR:<br/>• VV/VH Polarization<br/>• GLCM Textures<br/>• Derived Indices>, fillcolor="#C5E1A5", shape="cylinder"];
+            
+            labels [label=<<b>Ground Truth</b><br/>• JRC Water Layer<br/>• Manual Labels<br/>• Validation Data>, fillcolor="#C5E1A5", shape="cylinder"];
+            
+            models [label=<<b>Models</b><br/>• Attention U-Net<br/>• LightGBM<br/>• Pretrained Weights>, fillcolor="#C5E1A5", shape="cylinder"];
+        }
+    }
+    
+    // ============================================
+    // External Systems
+    // ============================================
+    subgraph cluster_external {
+        label="External Systems";
+        style=filled;
+        fillcolor="#E0E0E0";
+        
+        sentinel [label="Sentinel-1 SAR\nESA/Copernicus", fillcolor="#BDBDBD", shape="box3d"];
+        docker [label="Docker Runtime\nContainerized Deployment", fillcolor="#BDBDBD", shape="box3d"];
+    }
+    
+    // ============================================
+    // Connections - UI to Core
+    // ============================================
+    sidebar -> ui_layer [label="User Input", color="#1976D2"];
+    canvas -> ui_layer [label="Visual Feedback", color="#1976D2"];
+    controls -> ui_layer [label="Commands", color="#1976D2"];
+    
+    ui_layer -> filter_engine [label="Process Request", color="#F57C00", penwidth=2];
+    filter_engine -> ui_layer [label="Results", color="#F57C00", penwidth=2, style=dashed];
+    
+    // ============================================
+    // Connections - Core to Algorithms
+    // ============================================
+    filter_engine -> radiometric [style=dotted, color="#E91E63"];
+    filter_engine -> texture [style=dotted, color="#E91E63"];
+    filter_engine -> morphological [style=dotted, color="#E91E63"];
+    filter_engine -> geomorphic [style=dotted, color="#E91E63"];
+    filter_engine -> ml_dl [style=dotted, color="#E91E63"];
+    filter_engine -> custom [style=dotted, color="#E91E63"];
+    
+    // ============================================
+    // Connections - Core to Support Modules
+    // ============================================
+    ui_layer -> analysis [label="Analytics", color="#FBC02D"];
+    ui_layer -> qa [label="Validation", color="#FBC02D"];
+    ui_layer -> presets [label="Load/Save", color="#FBC02D"];
+    
+    // ============================================
+    // Connections - Core to Data Layer
+    // ============================================
+    filter_engine -> config [label="Configuration", color="#689F38", penwidth=2];
+    
+    config -> features [label="Load", color="#558B2F"];
+    config -> labels [label="Load", color="#558B2F"];
+    config -> models [label="Load", color="#558B2F"];
+    
+    ml_dl -> models [label="Use Models", color="#7B1FA2", style=dashed];
+    
+    // ============================================
+    // External Connections
+    // ============================================
+    sentinel -> features [label="SAR Data", color="#424242"];
+    docker -> ui_layer [label="Runtime", color="#424242", style=dashed];
+    
+    // ============================================
+    // Legend
+    // ============================================
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        fillcolor="#FAFAFA";
+        
+        legend_ui [label="UI Components", fillcolor="#90CAF9", shape="box"];
+        legend_core [label="Core Processing", fillcolor="#FFB74D", shape="box"];
+        legend_algo [label="Algorithms", fillcolor="#F8BBD0", shape="box"];
+        legend_data [label="Data/Config", fillcolor="#C5E1A5", shape="box"];
+        
+        legend_ui -> legend_core [style=invis];
+        legend_core -> legend_algo [style=invis];
+        legend_algo -> legend_data [style=invis];
+    }
+}
