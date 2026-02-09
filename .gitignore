@@ -1,6 +1,3 @@
-# SAR Water Detection Lab - Git Ignore
-# ======================================
-
 # Python
 __pycache__/
 *.py[cod]
@@ -41,6 +38,8 @@ ENV/
 # Streamlit
 .streamlit/
 session_state.json
+audit_log.json
+golden_set.json
 
 # Data & Models (too large for git)
 processed/
@@ -61,8 +60,6 @@ chips/
 # Logs
 *.log
 logs/
-audit_log.json
-golden_set.json
 
 # Environment
 .env
@@ -96,3 +93,14 @@ Thumbs.db
 *.bak
 *.backup
 *~
+
+# Internal/Development files
+.cleanup_list
+linkedin_post_ready.txt
+RELEASE_SUMMARY.txt
+READY_TO_DEPLOY.md
+
+# Old versions
+*_v[0-9].py
+*_v[0-9][0-9].py
+README_OLD.md
