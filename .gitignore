@@ -104,3 +104,75 @@ READY_TO_DEPLOY.md
 *_v[0-9].py
 *_v[0-9][0-9].py
 README_OLD.md
+
+# ================================================================
+# INTERNAL FILES (kept locally, not pushed to GitHub)
+# ================================================================
+
+# Duplicate/Old Documentation
+README_OLD.md
+SAR_WATER_DETECTION_README.md
+SAR_WATER_DETECTION_DOCUMENTATION.md
+SAR_WATER_DETECTION_COMPLETE_DOCUMENTATION_V13.md
+SAR_WATER_DETECTION_RESEARCH.md
+COMPLETE_SYSTEM_DOCUMENTATION_V8.md
+COMPREHENSIVE_LAB_GUIDE.md
+STAGE_V6_DOCUMENTATION.md
+SAR Software Feature Audit.md
+
+# Internal Planning Files
+AUDIT LIST USER LOGIC.txt
+features audit list final.txt
+my talks.txt
+RELEASE_SUMMARY.txt
+DEPLOYMENT_SUCCESS.txt
+PRE_RELEASE_CHECKLIST.md
+READY_TO_DEPLOY.md
+FINAL_QUALITY_REPORT.md
+OPEN_SOURCE_SUMMARY.md
+LINKEDIN_POST.md
+linkedin_post_ready.txt
+
+# Data Collection Scripts (GEE)
+gee_india_120_chips.js
+gee_india_expanded.js
+gee_india_expanded_download.py
+gee_jrc_labels.js
+gee_temporal_data.js
+india_chip_locations.json
+india_chip_selector.py
+download_from_gdrive.py
+merge_features_labels.py
+
+# Data Validation Scripts
+data_validator.py
+data_validator_v2.py
+lobo_validator.py
+verify_smart_paste.py
+test_edge_cases.py
+final_math_audit.py
+convert_tif_to_npy.py
+convert_tif_to_npy_v2.py
+
+# Research/Training Code
+cldice_loss.py
+comprehensive_loss.py
+tversky_centerline_loss.py
+sota_postprocessing.py
+sota_research_module.py
+tta_module.py
+run_gpu_pipeline.py
+
+# Helper Scripts
+deploy_to_server.sh
+launch_gpu_pipeline.sh
+push_to_github.sh
+generate_linkedin_post.sh
+show_deployment_summary.sh
+
+# Internal docs directory
+docs/
+
+# Cleanup analysis
+CLEANUP_ANALYSIS.txt
+
