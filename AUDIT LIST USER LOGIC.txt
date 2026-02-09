@@ -1,0 +1,361 @@
+AUDIT LIST = USER LOGIC ARCHITECTURE 
+
+
+
+
+This is the **Final Engineering Specification** for the **25 Software Features**. This list defines the application logic, user interface behavior, and automation workflows that wrap around the 44 core math algorithms.
+
+### 📋 MASTER FEATURE AUDIT: SAR LAB SOFTWARE (v1.0)
+
+*Total Items: 25 Distinct Software Features*
+
+---
+
+#### A. GUI & WORKFLOW (The Cockpit)
+
+*Features for visual control, verification, and data management.*
+
+**1. The "Traffic Light" System (QA Tagging)**
+
+* **1.1 Trigger:** Sidebar buttons labeled `🟢 Perfect`, `🟡 Ambiguous`, `🔴 Corrupted`.
+* **1.2 Logic:** Updates a hidden sidecar file or audit log with tags (`status: valid` or `status: trash`).
+* **1.3 Behavior:**
+* **Red:** Disables the "Save" button immediately (Safety Lock).
+* **Green:** Automatically adds the filename to the "Golden Set" list for Phase 2 AI training.
+
+
+
+**2. The Geo-Sync Module (Map Verification)**
+
+* **2.1 Trigger:** Toggle switch for `Show Location Map` or `Verify on Google Maps`.
+* **2.2 Logic:** Extracts coordinates from the GeoTIFF metadata  Sends to Folium/Leaflet API.
+* **2.3 Behavior:**
+* **Static Sync:** Locks a Google Satellite view exactly to the chip's center point.
+* **Verification:** Allows instant visual check for false positives (e.g., differentiating Solar Farms from Water).
+
+
+
+**3. The Reference Strip (Permanent Context)**
+
+* **3.1 Feature:** A fixed, non-scrollable top row displaying raw data channels: `VV`, `VH`, `MNDWI`, `DEM`, `Slope`, `HAND`, `TWI`.
+* **3.2 Behavior:** Always visible regardless of scrolling. Serves as the immutable "Truth" for comparison against filtered results.
+
+**4. The "Surgical" Editor (Manual Correction)**
+
+* **4.1 Tool:** Paintbrush & Eraser tool with a size slider (1px to 20px).
+* **4.2 Logic:** Creates a secondary layer. `Final Mask` = `Filter Mask`  `User Draw` (Union) or `Filter Mask` - `User Erase` (Subtraction).
+* **4.3 Behavior:** Instantly updates the visual mask and recalculates the "Water %" statistic in real-time.
+
+**5. The Interactive Histogram (Visual Thresholding)**
+
+* **5.1 Tool:** A dynamic graph showing the distribution of pixel brightness (Land Peak vs. Water Peak).
+* **5.2 Action:** User drags a **Vertical Red Line** across the graph to set the cutoff value.
+* **5.3 Behavior:** The image mask updates in real-time as the slider moves, allowing "visual tuning" of the threshold.
+
+**6. The "Golden Zipper" (Export Pipeline)**
+
+* **6.1 Trigger:** Button `💾 Save & Next`.
+* **6.2 Logic:**
+* Saves the Binary Mask as a `.png` (0/255).
+* Saves the Recipe Metadata as a `.json` file.
+* Clears RAM and automatically loads the next chip in the queue.
+
+
+* **6.3 Behavior:** Seamless batch processing workflow without manual file naming or directory navigation.
+
+**7. The "Director's Cut" (Composite Logic)**
+
+* **7.1 Input:** Checkboxes (`Include`) available on every sandbox window.
+* **7.2 Presets:**
+* `Union (OR)`: High Sensitivity (detects water if *any* filter sees it).
+* `Intersection (AND)`: High Precision (detects water only if *all* filters agree).
+* `Majority Vote`: Robustness (e.g., 3 out of 5 filters agree).
+
+
+* **7.3 Output:** Updates the bottom-row "Final Result" window dynamically based on selection.
+
+**8. The Pixel Probe (Inspector)**
+
+* **8.1 Action:** Hover mouse cursor over any pixel in the Reference Strip.
+* **8.2 Display:** A floating tooltip appears.
+* **8.3 Data:** Displays exact values for `VH (dB)`, `Height (m)`, `Slope (°)`, and `Current Label`.
+* **8.4 Value:** Diagnoses *why* a filter failed (e.g., identifying that a pixel is dark but has a 20° slope).
+
+**9. Window Controls (Reset & Naming)**
+
+* **9.1 Reset:** `🗑️ Trash Icon` on every window to clear/reset that specific slot.
+* **9.2 Versioning:** Auto-counter (`v1`, `v2`) tracks edits per window + **Manual Rename** option (User types custom name).
+* **9.3 Source Select:** Dropdown to pick input (`VV`, `VH`, `Ratio`) per window.
+
+---
+
+#### B. AUTOMATION & LOGIC (The Computational Layer)
+
+*Features that use the CPU to solve problems or generate options.*
+
+**10. The "Target-Match Recommender" (Reverse Solver)**
+
+* **10.1 Input:** User types "Target Water: [ 15 ] %".
+* **10.2 Logic:** Engine runs a brute-force simulation of *all available filters* with varying thresholds.
+* **10.3 Output:** Automatically populates the 15 windows with **15 different methods** that all successfully yielded  15% water (e.g., Win1: Otsu@-21dB, Win2: Simple@-22.5dB).
+
+**11. The "Smart Brute-Force" (Variety Generator)**
+
+* **11.1 Trigger:** Button `Populate with Variety`.
+* **11.2 Logic:** Runs all 44 methods  Calculates a "Similarity Score" between results.
+* **11.3 Output:** Fills the 15 windows with the 15 most **mathematically distinct** results (maximizing visual variety).
+
+**12. The "Filter Pipeline" (Chaining)**
+
+* **12.1 Feature:** Support for multi-step processing within a single window.
+* **12.2 UI:** `+ Add Step` button in the window settings.
+* **12.3 Example:** Step 1: `Lee Filter`  Step 2: `Otsu`  Step 3: `Closing`.
+
+**13. The "Logic Gate" Editor (Node Flow)**
+
+* **13.1 Tool:** Boolean Formula Builder for the Composite Result.
+* **13.2 Input:** User types custom logic string.
+* **13.3 Example:** `(Window 1 AND Window 2) OR (Window 5 AND NOT Window 6)`.
+
+**14. The "Dynamic Split" Solver (Quad-Split)**
+
+* **14.1 Logic:** mathematically cuts the chip into 4 quadrants (256x256).
+* **14.2 Action:** Calculates an optimized, independent threshold for each quadrant.
+* **14.3 Result:** Stitches quadrants back together, handling uneven lighting or incidence angle variation across the chip.
+
+**15. The "Stability Heatmap" (Perturbation Test)**
+
+* **15.1 Logic:** Runs the selected threshold at , , and .
+* **15.2 Visual:**
+* **Blue:** Stable (Pixel stayed Water in all 3 runs).
+* **Yellow:** Unstable (Pixel flickered between Water/Land).
+
+
+* **15.3 Value:** Highlights "Fuzzy Edges" for manual review.
+
+**16. The "Auto-Noise" Tuner**
+
+* **16.1 Logic:** Analyzes the "Blob Size Histogram" of the binary mask.
+* **16.2 Action:** Identifies the statistical gap between "Noise Dots" and "Real Lakes".
+* **16.3 Result:** Auto-calculates and applies the optimal Morphological Opening size.
+
+**17. Equation Editor (Manual Code)**
+
+* **17.1 Tool:** Text box for entering raw Python/Numpy logic.
+* **17.2 Action:** Engine parses and executes the string.
+* **17.3 Example:** `(VH < -21) & (HAND < 5)`.
+
+**18. Custom Alias Mapping**
+
+* **18.1 Feature:** Internal dictionary mapping user-defined terms to actual math functions.
+* **18.2 Map:**
+* `Curvature`  Geodesic Active Contour.
+* `Continuity`  Morphological Closing.
+* `Topo Focus`  HAND + TWI logic.
+* `Flat`  Slope < 2°.
+
+
+
+---
+
+#### C. SAR PHYSICS & ADVANCED LOGIC (The Science Layer)
+
+*Features addressing specific Radar anomalies.*
+
+**19. The "Rough Water" Compensator (Wind Correction)**
+
+* **19.1 Logic:** Runs a Texture Scan (GLCM).
+* **19.2 Action:**
+* If Low Variance  Uses Standard Threshold.
+* If High Variance (Windy)  Auto-switches to K-Distribution or lowers threshold specifically for that area.
+
+
+* **19.3 Value:** Fixes "holes" in lakes caused by wind-driven waves.
+
+**20. The "Ray-Traced" Shadow Hunter**
+
+* **20.1 Input:** Satellite Azimuth & Look Angle + DEM.
+* **20.2 Action:** Performs a Ray-Tracing Simulation on the elevation model.
+* **20.3 Result:** Predicts geometric shadows and auto-removes them from the water mask.
+* **20.4 Value:** Eliminates false positives caused by mountains masking the terrain.
+
+**21. The "Bank Snapper" (Gradient Lock)**
+
+* **21.1 Logic:** Analyzes Gradient Magnitude near the initial mask edges.
+* **21.2 Action:** "Pushes" or "Pulls" the mask boundary until it aligns with the sharpest pixel change.
+* **21.3 Value:** Ensures pixel-perfect river banks.
+
+**22. The "Best-Band" Auto-Selector**
+
+* **22.1 Logic:** Calculates **Fisher Distance** (Separability) for VV, VH, and Ratio bands.
+* **22.2 Action:** Auto-selects the band with the highest contrast and loads it into Window 1.
+* **22.3 Value:** Ensures the workflow starts with the cleanest possible data source.
+
+**23. The "Island Protector" (Topology Logic)**
+
+* **23.1 Logic:** Performs a topology check on small "Land" blobs during cleanup.
+* **23.2 Check:** "Is this small blob completely surrounded by Water?"
+* **23.3 Action:**
+* Yes  Keep (It is a Real Island).
+* No  Delete (It is Speckle Noise).
+
+
+
+**24. The "Sub-Pixel" Fraction (Soft Classification)**
+
+* **24.1 Logic:** Applies a Linear Mixture Model to edge pixels.
+* **24.2 Output:** Generates a percentage map (e.g., "64% Water") instead of a binary 0/1 mask.
+* **24.3 Value:** Provides higher accuracy for water volume estimation.
+
+**25. Fusion Presets (Quick Buttons)**
+
+* **25.1 High Conf:** Shortcut button that auto-selects `Intersection (AND)` logic.
+* **25.2 Med Conf:** Shortcut button that auto-selects `Majority Vote` logic.
+* **25.3 Low Conf:** Shortcut button that auto-selects `Union (OR)` logic.
+
+
+
+Here is the **continuation of the list** (Items 26–32). These are the specific features found in your text that were missing from the previous set.
+
+Add these to the **Master Feature Audit**:
+
+---
+
+#### D. NEW VERIFICATION & UI TOOLS (The Missing "Extras")
+
+**26. The "Time-Machine" Check (Historical Optical)**
+
+* **26.1 Trigger:** Button `Fetch Sentinel-2 Image`.
+* **26.2 Logic:** Queries Sentinel Hub or Google Earth Engine for an optical image *closest to the SAR chip's acquisition date*.
+* **26.3 Value:** Confirms if water is real (e.g., a temporary flood) vs. a permanent feature, solving the issue where standard Google Maps imagery is outdated.
+
+**27. The OSM Water Overlay (Vector Truth)**
+
+* **27.1 Trigger:** Toggle switch `Show OSM Water`.
+* **27.2 Logic:** Downloads OpenStreetMap water vector layers for the specific bounding box.
+* **27.3 Display:** Draws a **Transparent Blue Outline** on top of the SAR chip.
+* **27.4 Value:** Acts as a "Baseline Truth." If your filter detects water where OSM says there is a highway, you know it is a false positive.
+
+**28. The "Swipe" Comparison Tool**
+
+* **28.1 UI:** A vertical slider bar placed in the middle of the Result Window.
+* **28.2 Action:** Drag left/right. Left side shows Raw SAR; Right side shows the Binary Mask.
+* **28.3 Value:** The fastest method to spot pixel-level leaks or omissions by visually "cutting" through the layers.
+
+**29. Window-Level Voting (Filter QA)**
+
+* **29.1 UI:** Small Red/Green buttons on *each* of the 15 windows (distinct from the main Chip QA).
+* **29.2 Usage:** Mark Window 1 as "Green" (Good Result) and Window 4 as "Red" (Garbage).
+* **29.3 Auto-Sort:** A button `Hide Rejected` collapses/hides all windows marked Red to declutter the workspace.
+
+**30. The Polygon Lasso (Fast Edit)**
+
+* **30.1 Tool:** Click-click-click to draw a custom polygon shape.
+* **30.2 Action:** Press `Delete` to remove everything inside (or `Fill` to add).
+* **30.3 Value:** Much faster than the paintbrush for removing large artifacts (like large shadow blobs or urban noise).
+
+**31. Blind Spot Alert**
+
+* **31.1 Feature:** Visual overlay highlighting invalid pixels (No Data, Radar Shadow, or Geometric Distortion).
+* **31.2 Value:** Warns you: "Do not label this area, the data is invalid/corrupted," preventing you from teaching the AI to recognize noise as water.
+
+**32. Session "State Saver"**
+
+* **32.1 Logic:** Auto-saves progress to a local `session_state.json` file on exit.
+* **32.2 Behavior:** On restart, automatically loads `Chip #45` (or wherever you stopped) and restores your previous filter settings/recipe.
+
+
+
+
+
+E. CLASSIFICATION & DISPLAY MODES (The "Nuance" Layer)
+
+33. The "Confidence Map" Mode (Definite/Probable/Possible)
+
+    Trigger: Toggle Show Confidence instead of Binary Mask.
+
+    Logic:
+
+        Definite: Pixels where 5+ filters agree (or High Threshold).
+
+        Probable: Pixels where 3-4 filters agree.
+
+        Possible: Pixels where only 1-2 filters see water.
+
+    Display: Colors the result in 3 shades of blue (Dark=Definite, Light=Possible).
+
+    Why: Addresses your request for "definite, probable, possible" labels.
+
+34. The "Depth Contour" Grader (h1, h2, h3, h4)
+
+    Trigger: Filter option HAND Contours.
+
+    Logic: Slices the HAND (Height Above Nearest Drainage) data into distinct bands.
+
+        h1: 0-1m (Deep Channel)
+
+        h2: 1-3m (Floodplain)
+
+        h3: 3-5m (Risk Zone)
+
+        h4: >5m (Safe)
+
+    Value: Addresses your "h1 h2 h3 h4 etc" request, letting you see flood severity, not just "wetness."
+
+35. The "Strict vs. Relaxed" Preset Switch
+
+    Trigger: A toggle on specific filters (like Otsu or Adaptive).
+
+    Logic:
+
+        Strict: Adds a buffer (e.g., Threshold - 1.5dB). Reduces noise, misses faint water.
+
+        Relaxed: Subtracts a buffer (e.g., Threshold + 1.5dB). Catches faint water, adds noise.
+
+    Value: Addresses your "strict, relaxed" option request without making you manually type numbers.
+
+36. The "Eco-Classifier" (Lake vs. Wetland)
+
+    Trigger: Post-processing option Classify Water Type.
+
+    Logic:
+
+        Lake: Large, open water (Low Variance/Texture).
+
+        Wetland: Water mixed with vegetation (High Variance/Texture + High Backscatter).
+
+    Display: distinct colors (Blue for Lake, Green for Wetland).
+
+    Value: Addresses your "wetland, lake" request.
+
+37. External Metadata Loader ("JS Script" Source)
+
+    Trigger: Checkbox Load Coordinates from Script/JSON.
+
+    Logic: Instead of relying on the GeoTIFF header (which might be empty), the app reads your specific location.js or .json file to find the lat/long for the Map Sync.
+
+    Value: Addresses your specific note: "compare with google maps data as per location written in js script".
+    
+   38. The "Strict/Relaxed" Switch (Buffer Logic)
+
+    Trigger: Toggle on Threshold filters.
+
+    Logic:
+
+        Strict: Threshold - 1.5dB (Under-segments).
+
+        Relaxed: Threshold + 1.5dB (Over-segments).
+
+    Addresses: Your request for "strict, relaxed" presets.
+    
+    
+   39. The "Flow Director" (Dom/Topo Focus)
+
+    Trigger: Overlay Show Flow Direction.
+
+    Logic: Calculates the Gradient of the HAND/DEM model.
+
+    Display: Overlays small arrows showing which way water would flow (Dominant Direction).
+
+    Addresses: Your request for "dom, topo focus".
+    

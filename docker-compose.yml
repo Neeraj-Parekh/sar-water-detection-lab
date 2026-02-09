@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  sar-lab:
+    build: .
+    container_name: sar-water-detection-lab
+    ports:
+      - "8501:8501"
+    volumes:
+      # Mount data directories (customize these paths)
+      - ./processed:/app/processed
+      - ./models:/app/models
+      - ./results:/app/results
+      # Mount config for easy updates
+      - ./config.py:/app/config.py:ro
+    environment:
+      - SAR_ENV=production
+      - SAR_DATA_ROOT=/app
+      - SAR_MAX_WORKERS=4
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# Optional: Add development override
+  sar-lab-dev:
+    extends: sar-lab
+    volumes:
+      # Mount entire codebase for development
+      - .:/app
+    environment:
+      - SAR_ENV=development
+    command: streamlit run app.py --server.runOnSave=true

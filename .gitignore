@@ -1,0 +1,98 @@
+# SAR Water Detection Lab - Git Ignore
+# ======================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Streamlit
+.streamlit/
+session_state.json
+
+# Data & Models (too large for git)
+processed/
+exports/
+models/
+results/
+visualizations/
+chips/
+*.tif
+*.tiff
+*.npy
+*.npz
+*.h5
+*.pth
+*.pkl
+*.joblib
+
+# Logs
+*.log
+logs/
+audit_log.json
+golden_set.json
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Coverage & Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Documentation Build
+docs/_build/
+site/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS
+Thumbs.db
+.Trash-*
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Backup files
+*.bak
+*.backup
+*~
